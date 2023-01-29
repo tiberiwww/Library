@@ -1,0 +1,397 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+:root {
+  --white: #fffbfb;
+  --grey: #f0eef1;
+  --black: #050505;
+  --red: #ff7070;
+  --light-green: #9fff9c;
+  --light-red: #ff9c9c;
+  --border-radius: 8px;
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 15px;
+  --spacing-lg: 20px;
+  --spacing-xl: 40px;
+  --container-width: 1200px;
+  --shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+
+  font-family: "Poppins", sans-serif;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--grey);
+}
+
+/* Header section */
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 2rem 3rem;
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+}
+
+/* Login button */
+
+.btn-login,
+.btn-submit {
+  background-color: #ffffff;
+  border: 1px solid rgb(209, 213, 219);
+  border-radius: 0.5rem;
+  /* box-sizing: border-box; */
+  color: var(--black);
+  font-size: 1.1rem;
+  min-width: 86px;
+  font-weight: 600;
+  line-height: 1.25rem;
+  padding: 0.75rem 1rem;
+  text-align: center;
+  text-decoration: none #d1d5db solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  user-select: none;
+  cursor: pointer;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.btn-submit {
+  background-color: rgb(22, 237, 119);
+}
+
+.btn-login:hover {
+  background-color: rgb(249, 249, 249);
+}
+
+.btn-submit:hover {
+  background-color: rgb(22, 215, 109);
+}
+
+.btn-login:focus,
+.btn-submit:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+/* Body section */
+
+.body-container {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 100%;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 3rem;
+}
+
+.addBook {
+  align-self: center;
+}
+
+footer {
+  justify-self: center;
+  padding: 1rem 3rem;
+}
+
+/* Add book button */
+.btn-addBook {
+  appearance: none;
+  background-color: var(--grey);
+  border-width: 0;
+  box-sizing: border-box;
+  color: #000000;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1em;
+  margin: 0;
+  opacity: 1;
+  outline: 0;
+  padding: 1.5em 2.2em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-rendering: geometricprecision;
+  text-transform: uppercase;
+  transition: opacity 300ms cubic-bezier(0.694, 0, 0.335, 1),
+    background-color 100ms cubic-bezier(0.694, 0, 0.335, 1),
+    color 100ms cubic-bezier(0.694, 0, 0.335, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.btn-addBook:before {
+  animation: opacityFallbackOut 0.5s step-end forwards;
+  backface-visibility: hidden;
+  background-color: #a1a1a121;
+  z-index: 0;
+  clip-path: polygon(-1% 0, 0 0, -25% 100%, -1% 100%);
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform: translateZ(0);
+  transition: clip-path 0.5s cubic-bezier(0.165, 0.84, 0.44, 1),
+    -webkit-clip-path 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  width: 100%;
+}
+
+.btn-addBook:hover:before {
+  animation: opacityFallbackIn 0s step-start forwards;
+  clip-path: polygon(0 0, 101% 0, 101% 101%, 0 101%);
+}
+
+.btn-addBook:after {
+  background-color: #ffffff;
+}
+
+.btn-addBook {
+  z-index: 1;
+  position: relative;
+}
+/* Library */
+
+.library {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  /* outline: 1px solid black; */
+  /* border: 1px solid grey; */
+  /* background-color: #e7e5e4; */
+  /* grid-template-rows: 1fr; */
+  /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+}
+
+.book {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.4rem;
+  /* outline: 1px solid black; */
+  /* max-width: max-content; */
+  padding: 1rem;
+  font-size: 1.2rem;
+  border-radius: 4px;
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 27vh; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: var(--grey);
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  border-radius: 4px;
+  width: 300px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+  padding: 1rem;
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  text-align: center;
+  padding: 4px 16px;
+  background-color: var(--grey);
+  color: var(--black);
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+input {
+  width: 250px;
+  height: 30px;
+  outline: none;
+  border: 0px;
+  border-radius: 6px;
+  padding: 5px;
+  caret-color: rgb(177, 177, 177);
+}
+.container-read {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+#isRead {
+  width: 1rem;
+  height: 1rem;
+}
+
+.edit,
+.remove {
+  align-self: stretch;
+}
+
+/* CSS */
+.library button {
+  /* background-color: #ffffff; */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0;
+  min-height: 3rem;
+  padding: calc(0.875rem - 1px) calc(1.5rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: 100%;
+}
+
+.library button:hover,
+.library button:focus {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.library button:hover {
+  transform: translateY(-1px);
+}
+
+.library button:active {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  color: rgba(0, 0, 0, 0.65);
+  transform: translateY(0);
+}
+
+.book-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  gap: 0.2rem;
+}
+
+.book-interact {
+  display: flex;
+  gap: 0.2rem;
+  align-self: stretch;
+}
+
+.edit,
+.remove {
+  align-self: stretch;
+  width: 50%;
+}
+
+.book-title {
+  font-weight: bold;
+  text-align: center;
+}
+
+.book-author {
+  text-align: center;
+}
+
+.book-read {
+  background-color: #9fff9c;
+}
+
+.footer-container {
+  display: flex;
+  align-items: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
+#github:hover {
+  animation: spin 0.4s linear;
+}
