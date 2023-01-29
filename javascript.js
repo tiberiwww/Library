@@ -84,7 +84,7 @@ btn.onclick = function () {
 };
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
+window.onmousedown = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
     document.getElementById("book-form").reset();
