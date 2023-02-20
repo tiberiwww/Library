@@ -63,8 +63,20 @@ library.addBook(theCreativeAct);
 library.addBook(theHobbit);
 
 console.log(library.getLibrary());
-
-function displayBooks() {}
+// let localStorageLibrary = JSON.parse(localStorage.getItem("library"));
+function displayLibrary() {
+  if (
+    JSON.parse(localStorage.getItem("library")) !== null &&
+    JSON.parse(localStorage.getItem("library")).length > 2
+  ) {
+    // console.log(JSON.parse(localStorage.getItem("library")));
+    library.books = JSON.parse(localStorage.getItem("library"));
+    // console.log(library.books);
+    displayBook(library);
+  } else {
+    displayBook(library);
+  }
+}
 
 // Get the modal
 let modal = document.getElementById("myModal");
@@ -105,7 +117,10 @@ function getData(form) {
   ) {
     newBook = new Book(book.title, book.author, book.pages, book.isRead);
 
+    //local storage
+
     library.addBook(newBook);
+    localStorage.setItem("library", JSON.stringify(library.books));
   } else {
     editBook = library.getBook(targetBookTitle.innerHTML.trim());
     editBook.title = book.title;
@@ -133,6 +148,8 @@ function getData(form) {
       titleRead.innerHTML = "Not read";
       titleRead.style.backgroundColor = "#ff9c9c";
     }
+
+    localStorage.setItem("library", JSON.stringify(library.books));
   }
 
   console.log(library);
@@ -140,83 +157,87 @@ function getData(form) {
 
 //
 
-function displayBook() {
-  let lengthLibrary = library.books.length;
+function displayBook(library) {
+  divLibrary = document.querySelector(".library");
+  if (document.querySelector(".library")) {
+    document.querySelector(".library").textContent = "";
+    for (let index = 0; index < library.books.length; index++) {
+      let classBook = "book" + (index + 1);
 
-  let classBook = "book" + lengthLibrary;
+      let divBook = document.createElement("div");
+      divBook.className = "book";
+      divBook.classList.add(classBook);
+      divLibrary.appendChild(divBook);
 
-  let divBook = document.createElement("div");
-  divBook.className = "book";
-  divBook.classList.add(classBook);
-  divLibrary.appendChild(divBook);
+      let divTitle = document.createElement("div");
+      divTitle.innerHTML = library.books[index].title;
+      divTitle.className = "book-title";
+      divBook.appendChild(divTitle);
 
-  let divTitle = document.createElement("div");
-  divTitle.innerHTML = newBook.title;
-  divTitle.className = "book-title";
-  divBook.appendChild(divTitle);
+      let divAuthor = document.createElement("div");
+      divAuthor.innerHTML = library.books[index].author;
+      divAuthor.className = "book-author";
+      divBook.appendChild(divAuthor);
 
-  let divAuthor = document.createElement("div");
-  divAuthor.innerHTML = newBook.author;
-  divAuthor.className = "book-author";
-  divBook.appendChild(divAuthor);
+      let divPages = document.createElement("div");
+      divPages.innerHTML = library.books[index].pages + " pages";
+      divPages.className = "book-pages";
+      divBook.appendChild(divPages);
 
-  let divPages = document.createElement("div");
-  divPages.innerHTML = newBook.pages + " pages";
-  divPages.className = "book-pages";
-  divBook.appendChild(divPages);
+      let divButtons = document.createElement("div");
+      divButtons.className = "book-buttons";
+      divBook.appendChild(divButtons);
 
-  let divButtons = document.createElement("div");
-  divButtons.className = "book-buttons";
-  divBook.appendChild(divButtons);
+      let divIsRead = document.createElement("div");
+      divIsRead.className = "isRead";
+      divButtons.appendChild(divIsRead);
 
-  let divIsRead = document.createElement("div");
-  divIsRead.className = "isRead";
-  divButtons.appendChild(divIsRead);
+      let btnRead = document.createElement("button");
+      if (library.books[index].isRead) {
+        btnRead.innerHTML = "Read";
+        btnRead.style.backgroundColor = "#9fff9c";
+      } else {
+        btnRead.innerHTML = "Not Read";
+        btnRead.style.backgroundColor = "#ff9c9c";
+      }
 
-  let btnRead = document.createElement("button");
-  if (newBook.isRead) {
-    btnRead.innerHTML = "Read";
-    btnRead.style.backgroundColor = "#9fff9c";
-  } else {
-    btnRead.innerHTML = "Not Read";
-    btnRead.style.backgroundColor = "#ff9c9c";
+      btnRead.className = "book-read";
+      divIsRead.appendChild(btnRead);
+
+      let divBookInteract = document.createElement("div");
+      divBookInteract.className = "book-interact";
+      divButtons.appendChild(divBookInteract);
+
+      ////
+
+      let divEdit = document.createElement("div");
+      divEdit.className = "edit";
+      divBookInteract.appendChild(divEdit);
+
+      let btnEdit = document.createElement("button");
+
+      btnEdit.className = "btn-edit";
+      btnEdit.innerHTML = "Edit";
+      divEdit.appendChild(btnEdit);
+
+      ////
+
+      let divRemove = document.createElement("div");
+      divRemove.className = "remove";
+      divBookInteract.appendChild(divRemove);
+
+      let btnRemove = document.createElement("button");
+
+      btnRemove.className = "btn-remove";
+      btnRemove.innerHTML = "Remove";
+      divRemove.appendChild(btnRemove);
+    }
   }
-
-  btnRead.className = "book-read";
-  divIsRead.appendChild(btnRead);
-
-  let divBookInteract = document.createElement("div");
-  divBookInteract.className = "book-interact";
-  divButtons.appendChild(divBookInteract);
-
-  ////
-
-  let divEdit = document.createElement("div");
-  divEdit.className = "edit";
-  divBookInteract.appendChild(divEdit);
-
-  let btnEdit = document.createElement("button");
-
-  btnEdit.className = "btn-edit";
-  btnEdit.innerHTML = "Edit";
-  divEdit.appendChild(btnEdit);
-
-  ////
-
-  let divRemove = document.createElement("div");
-  divRemove.className = "remove";
-  divBookInteract.appendChild(divRemove);
-
-  let btnRemove = document.createElement("button");
-
-  btnRemove.className = "btn-remove";
-  btnRemove.innerHTML = "Remove";
-  divRemove.appendChild(btnRemove);
 }
 
 // Modal Form Create Book and Display
 
-let divLibrary = document.querySelector(".library");
+let divLibrary;
 
 document.getElementById("book-form").addEventListener("submit", function (e) {
   modal.style.display = "none";
@@ -227,10 +248,20 @@ document.getElementById("book-form").addEventListener("submit", function (e) {
     modal.firstElementChild.firstElementChild.firstElementChild.innerHTML ===
     "Add book"
   ) {
-    displayBook();
+    if (
+      JSON.parse(localStorage.getItem("library")) !== null &&
+      JSON.parse(localStorage.getItem("library")).length > 0
+    ) {
+      // console.log(JSON.parse(localStorage.getItem("library")));
+      library.books = JSON.parse(localStorage.getItem("library"));
+      // console.log(library.books);
+      displayBook(library);
+    } else {
+      displayBook(library);
+    }
   }
 });
-
+// console.log(JSON.parse(localStorage.getItem("library")).length);
 let libraryContainer = document.querySelector(".library");
 let targetBookTitle;
 
@@ -240,6 +271,7 @@ libraryContainer.addEventListener("click", function (e) {
     library.removeBook(
       e.target.closest(".book").querySelector(".book-title").innerHTML
     );
+    localStorage.setItem("library", JSON.stringify(library.books));
   }
 
   if (e.target.classList.contains("book-read")) {
@@ -247,6 +279,7 @@ libraryContainer.addEventListener("click", function (e) {
       e.target.parentNode.parentNode.parentNode.firstElementChild.innerHTML.trim();
 
     library.changeIsRead(title);
+    localStorage.setItem("library", JSON.stringify(library.books));
 
     if (e.target.innerHTML == "Read") {
       e.target.innerHTML = "Not read";
@@ -291,3 +324,4 @@ libraryContainer.addEventListener("click", function (e) {
     }
   }
 });
+displayLibrary();
